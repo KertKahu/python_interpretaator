@@ -793,7 +793,7 @@ class KEELAT3(cmd.Cmd):
 			while viit < len(reanumbrid):
 				#kood tõlgitakse ümber pythonile mõistetavaks
 				reanumber = reanumbrid[viit]
-				käsurida, saba = self.ymbertolkimine(self.programmikood[reanumber])
+				käsurida, tail = self.ymbertolkimine(self.programmikood[reanumber])
 				#kontrolli silumist, kui sees, siis detailne programmi läbimine
 				if self.silumine:
 					print(reanumber, end = ' ')
@@ -804,41 +804,41 @@ class KEELAT3(cmd.Cmd):
 				#otsitakse ridadest sobivust antud parameetritega, kui leiti, siis käitutakse vastavalt defineeritud käsule
 				#käske täidetakse vastavalt sellele, kuidas programmi funktsioonides nende olemus kirja pandud
 				if käsurida == 'ADNMED':
-					andmed.extend(eval('[{}]'.format(saba)))
+					andmed.extend(eval('[{}]'.format(tail)))
 					
 				elif käsurida == 'FN':
-					self.keel_fn(saba)
+					self.keel_fn(tail)
 					
 				elif käsurida == 'MASSIIV':
-					self.keel_massiiv(saba)
+					self.keel_massiiv(tail)
 					
 				elif käsurida == 'LOPP':
 					break
 				
 				elif käsurida == 'FOR':
-					nimi, piir, samm = self.keel_for(saba)
+					nimi, piir, samm = self.keel_for(tail)
 					tsüklid[nimi] = [piir, samm, viit]
 					
 				elif käsurida == 'ALAM':
 					alamad.append(viit)
-					viit = reanumbrid.index(int(saba)) - 1
+					viit = reanumbrid.index(int(tail)) - 1
 					
 				elif käsurida == 'MINE':
-					viit = reanumbrid.index(int(saba)) - 1
+					viit = reanumbrid.index(int(tail)) - 1
 					
 				elif käsurida == 'TINGIMUS':
-					mine = self.keel_tingimus(saba)
+					mine = self.keel_tingimus(tail)
 					if mine:
 						viit = reanumbrid.index(mine) - 1
 						
 				elif käsurida == 'SISEND':
-					self.keel_sisend(saba)
+					self.keel_sisend(tail)
 					
 				elif käsurida == 'VAARTUSTA':
-					exec(saba, self.muutujad)
+					exec(tail, self.muutujad)
 					
 				elif käsurida == 'JARGMINE':
-					nimi = saba.strip()
+					nimi = tail.strip()
 					self.muutujad[nimi] += tsüklid[nimi][1]
 					if tsüklid[nimi][1] > 0:
 						loop = self.muutujad[nimi] <= tsüklid[nimi][0]
@@ -850,13 +850,13 @@ class KEELAT3(cmd.Cmd):
 						del tsüklid[nimi]
 						
 				elif käsurida == 'HUPPA':
-					viit = reanumbrid.index(self.keel_huppa(saba)) - 1
+					viit = reanumbrid.index(self.keel_huppa(tail)) - 1
 					
 				elif käsurida == 'VALJASTA':
-					self.keel_valjasta(saba)
+					self.keel_valjasta(tail)
 					
 				elif käsurida == 'LOE':
-					exec('{} = {}'.format(saba, andmed.pop(0)), self.muutujad)
+					exec('{} = {}'.format(tail, andmed.pop(0)), self.muutujad)
 					
 				elif käsurida == 'KOMMENTAAR':
 					pass
@@ -867,7 +867,7 @@ class KEELAT3(cmd.Cmd):
 				elif käsurida == 'PEATA':
 					break
 				
-				elif '=' in saba or '=' in käsurida:
+				elif '=' in tail or '=' in käsurida:
 					exec(self.programmikood[reanumber], self.muutujad)
 					
 				else:
