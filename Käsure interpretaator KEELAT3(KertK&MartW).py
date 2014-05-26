@@ -1,4 +1,4 @@
-#Programmi koostajad: Kert Kahu ja Mart Weber rühm 17, rühma nimi AT3
+#Programmi koostajad: Kert Kahu ja Mart Weber rühm 17, rühma nimi AT3.
 #Programm valminud AKT aine raames Kevad 2014
 #Programm võimaldab masinkeelele sarnast keelt kasutajal kirja panna ja seda hilisemalt ka interpreteerida
 #Keele nimeks on AT3
