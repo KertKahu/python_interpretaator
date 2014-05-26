@@ -550,13 +550,13 @@ class KEELAT3(cmd.Cmd):
                 #kasutame meetodit strip()
                 #eraldame jupid
                 #võetakse väärtus pärast võrdus märki
-		fn_nimi, fn_parameeter, fn_funktsioon = tail.partition('=')
+		fn_nimi, fn_parameeter1, fn_funktsioon = tail.partition('=')
 		#otsitakse sulge
 		fn_parameeter = fn_nimi[(fn_nimi.find('(')) + 1:fn_nimi.find(')')]
 		fn_nimi = fn_nimi[:fn_nimi.find('(')].strip()
 		
-		#tekitame ja säilitame funktsiooni funktsioon
-		funktsioon = 'funktsioon {}: {}'.format(fn_parameeter, fn_funktsioon)
+		#tekitame ja säilitame funktsiooni lambda
+		funktsioon = 'lambda {}: {}'.format(fn_parameeter, fn_funktsioon)
 		#eval võimaldab pythoni programmil käivitada programmi ise.
 		self.muutujad[fn_nimi] = eval(funktsioon, self.muutujad)
 
